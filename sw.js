@@ -1,4 +1,4 @@
-const CACHE_NAME = 'kasir-habibi-v1';
+const CACHE_NAME = 'kasir-habibi-v2';
 const ASSETS = [
   './index.html',
   './manifest.json',
