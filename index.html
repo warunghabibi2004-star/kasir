@@ -285,7 +285,7 @@
     </div>
     <div class="p-3 bg-slate-900"><div id="reader" class="w-full"></div></div>
     <div class="p-3 bg-white">
-      <p class="text-xs text-slate-500 text-center">Arahkan kamera belakang ke barcode (jarak ±10–20 cm)</p>
+      <p class="text-xs text-slate-500 text-center">Arahkan kamera belakang ke barcode (jarak Â±10Â–20 cm)</p>
       <p id="scannerStatus" class="text-xs text-center mt-1 font-semibold text-blue-600">Meminta izin kamera...</p>
       <label id="wrapBeruntun" class="flex items-center justify-center gap-2 mt-2 cursor-pointer select-none">
         <input type="checkbox" id="chkBeruntun" class="w-4 h-4 text-blue-600 border-slate-300 rounded">
@@ -317,17 +317,12 @@ function tutupModalQuickAdd() { $('modalTambahProduk').classList.add('hidden'); 
 
 async function callGAS(action, data = {}) {
   try {
-    const response = await fetch(GAS_API_URL, {
+    const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(GAS_API_URL);
+    const response = await fetch(proxyUrl, {
       method: 'POST',
-      // 1. WAJIB: Gunakan text/plain;charset=utf-8
-      // Ini membuat browser menganggapnya "Simple Request" (tanpa preflight)
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify({ action: action, ...data }),
-      // 2. WAJIB: GAS selalu melakukan redirect (302), ikuti redirect-nya
-      redirect: 'follow' 
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: action, ...data })
     });
-    
-    // Cek jika response bukan JSON (misal halaman error Google)
     const text = await response.text();
     try {
         return JSON.parse(text);
@@ -340,7 +335,6 @@ async function callGAS(action, data = {}) {
     return { success: false, message: error.toString() };
   }
 }
-
 // ---------- SCANNER KAMERA ----------
 function bunyiBeep() {
   try {
@@ -622,7 +616,7 @@ async function muatRiwayatTransaksi() {
     const tgl = new Date(trx.tanggal).toLocaleString('id-ID');
     let detailHtml = '<ul class="space-y-0.5 text-xs text-slate-600">';
     (trx.items || []).forEach(it => {
-      detailHtml += `<li>• ${it.nama} <span class="text-slate-400">(${it.qty} x ${it.harga.toLocaleString()})</span></li>`;
+      detailHtml += `<li>Â• ${it.nama} <span class="text-slate-400">(${it.qty} x ${it.harga.toLocaleString()})</span></li>`;
     });
     detailHtml += '</ul>';
     html += `
