@@ -315,18 +315,18 @@ function $(id) { return document.getElementById(id); }
 function bukaModalQuickAdd() { $('modalTambahProduk').classList.remove('hidden'); }
 function tutupModalQuickAdd() { $('modalTambahProduk').classList.add('hidden'); }
 
-// === FUNGSI FETCH KE GAS (PENGGANTI google.script.run) ===
 async function callGAS(action, data = {}) {
   try {
     const response = await fetch(GAS_API_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'text/plain' }, // text/plain agar tidak kena CORS
-      body: JSON.stringify({ action: action, ...data })
+      // GUNAKAN INI: text/plain dengan charset
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' }, 
+      body: JSON.stringify({ action: action, ...data }),
+      redirect: 'follow' // GAS sering melakukan redirect, pastikan ini ada
     });
     return await response.json();
   } catch (error) {
     console.error("Error API GAS:", error);
-    alert("Gagal terhubung ke server database.");
     return { success: false, message: error.toString() };
   }
 }
