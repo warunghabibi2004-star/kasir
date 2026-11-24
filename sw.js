@@ -1,5 +1,5 @@
 // Naikkan angka versi ini setiap kali index.html diubah agar HP memuat versi terbaru
-const VERSI = 'kasir-v4';
+const VERSI = 'kasir-v5';
 const SHELL = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', e => {
